@@ -3,6 +3,8 @@ package net.twisted.fate.barbershop.aop;
 import net.twisted.fate.barbershop.entity.User;
 import net.twisted.fate.barbershop.enumeration.Sex;
 import org.springframework.core.MethodParameter;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -18,7 +20,9 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter methodParameter) {
-        return false;
+        return (methodParameter.getDeclaringClass().isAnnotationPresent(Controller.class) ||
+                methodParameter.getDeclaringClass().isAnnotationPresent(RestController.class))
+                && methodParameter.getParameterType().isAssignableFrom(User.class);
     }
 
     @Override

@@ -17,7 +17,7 @@ public interface ISolutionService {
 
     void removeById(PK pk);
 
-    List<Solution> listByProjectId(Long projectId);
+    List<Solution> listByProjectId(String projectId);
 
     void save(SolutionAddDTO dto, User user);
 

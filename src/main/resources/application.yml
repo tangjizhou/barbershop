@@ -7,5 +7,5 @@ spring:
     generate-ddl: on
     show-sql: on
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     open-in-view: off

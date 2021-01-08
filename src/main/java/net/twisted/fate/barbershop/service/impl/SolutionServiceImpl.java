@@ -29,7 +29,7 @@ public class SolutionServiceImpl implements ISolutionService {
     }
 
     @Override
-    public List<Solution> listByProjectId(Long projectId) {
+    public List<Solution> listByProjectId(String projectId) {
         return repository.findByProjectId(projectId);
     }
 
