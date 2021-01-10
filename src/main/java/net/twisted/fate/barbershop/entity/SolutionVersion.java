@@ -28,6 +28,9 @@ public class SolutionVersion extends BaseEntity {
     private String name;
 
     @Column
+    private Boolean isInheriting;
+
+    @Column
     private String description;
 
 }

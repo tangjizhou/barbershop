@@ -19,8 +19,6 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Table
-@SQLDelete(sql = "update solution set state = 0 where pk = ?")
-@Where(clause = "state = 1")
 public class Solution extends BaseEntity {
 
     @Column(length = 32)

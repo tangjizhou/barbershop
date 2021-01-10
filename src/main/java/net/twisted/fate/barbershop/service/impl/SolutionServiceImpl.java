@@ -62,9 +62,16 @@ public class SolutionServiceImpl extends BaseServiceImpl<Solution, PK, SolutionR
 
     @Override
     public void onRollback(SolutionVersion solutionVersion) {
+        repository.logicDeleteByVersion(PK.VERSION_LATEST);
         List<Solution> historicSolutions = repository.findByPkVersion(solutionVersion.getPk().getId());
-        historicSolutions.forEach(v -> v.getPk().setVersion(PK.VERSION_LATEST));
-        repository.saveAll(historicSolutions);
+        List<Solution> inheritedSolutions = historicSolutions.stream().map(v -> {
+            Solution solution = new Solution();
+            BeanUtils.copyProperties(v, solution);
+            solution.getPk().setVersion(PK.VERSION_LATEST);
+            solution.setIsActive(true);
+            return solution;
+        }).collect(Collectors.toList());
+        repository.saveAll(inheritedSolutions);
     }
 
 }

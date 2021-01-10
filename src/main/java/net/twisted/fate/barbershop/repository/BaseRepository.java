@@ -20,7 +20,7 @@ import java.io.Serializable;
 public interface BaseRepository<T extends BaseEntity, ID extends Serializable> extends JpaRepository<T, ID> {
 
     @Modifying
-    @Query("update #{#entityName} set state = 0 where pk = ?1")
+    @Query("update #{#entityName} set isActive = false where pk = ?1")
     void logicDelete(ID id);
 
 }

@@ -17,4 +17,8 @@ public interface SolutionVersionRepository extends BaseRepository<SolutionVersio
     @Query("update SolutionVersion set isActive = false where solutionId = ?1")
     void logicDeleteBySolutionId(String solutionId);
 
+    @Modifying
+    @Query("update SolutionVersion set isInheriting = false where solutionId = ?1")
+    void updateToNotInheritingBySolutionId(String solutionId);
+
 }

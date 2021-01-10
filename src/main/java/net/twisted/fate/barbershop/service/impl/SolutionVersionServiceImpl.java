@@ -34,15 +34,16 @@ public class SolutionVersionServiceImpl extends BaseServiceImpl<SolutionVersion,
 
     @Override
     public void create(SolutionVersionCreateDTO dto, User user) {
+        repository.updateToNotInheritingBySolutionId(dto.getSolutionId());
         SolutionVersion solutionVersion = new SolutionVersion();
         solutionVersion.setSolutionId(dto.getSolutionId());
         solutionVersion.setName(dto.getName());
         solutionVersion.setDescription(dto.getDescription());
+        solutionVersion.setIsInheriting(true);
         solutionVersion.fillOnCreate(user);
         solutionVersion = repository.save(solutionVersion);
         SolutionVersion savedSolution = solutionVersion;
         subscribers.forEach(v -> v.onCreate(savedSolution));
-        repository.logicDeleteBySolutionId(dto.getSolutionId());
     }
 
     @Override
@@ -60,8 +61,8 @@ public class SolutionVersionServiceImpl extends BaseServiceImpl<SolutionVersion,
     public void rollback(String solutionId, String id) {
         SolutionVersion solutionVersion = get(PK.of(id)).orElseThrow(() -> new IllegalArgumentException("版本不存在"));
         subscribers.forEach(v -> v.onRollback(solutionVersion));
-        repository.logicDeleteBySolutionId(solutionId);
-        solutionVersion.setIsActive(true);
+        repository.updateToNotInheritingBySolutionId(solutionId);
+        solutionVersion.setIsInheriting(true);
         update(solutionVersion);
     }
 

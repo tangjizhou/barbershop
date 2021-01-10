@@ -20,6 +20,7 @@ public class SolutionVersionVO extends BaseVO {
 
     private PK pk;
     private String name;
+    private String solutionId;
     private String description;
     private LocalDateTime createTime;
 
