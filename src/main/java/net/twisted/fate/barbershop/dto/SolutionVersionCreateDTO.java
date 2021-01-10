@@ -4,18 +4,17 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * TODO
+ * 新建版本参数
  *
  * @author tangjizhouchn@foxmail.com
- * @since 2021/1/7
+ * @since 2021/1/10
  */
 @Getter
 @Setter
-public class SolutionAddDTO {
+public class SolutionVersionCreateDTO {
 
-    private String projectId;
-    private String projectName;
-    private String code;
+    private String solutionId;
     private String name;
+    private String description;
 
 }

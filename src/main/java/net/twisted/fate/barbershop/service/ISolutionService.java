@@ -13,7 +13,7 @@ import java.util.List;
  * @author tangjizhouchn@foxmail.com
  * @since 2021/1/7
  */
-public interface ISolutionService {
+public interface ISolutionService extends IBaseService<Solution, PK> {
 
     void removeById(PK pk);
 

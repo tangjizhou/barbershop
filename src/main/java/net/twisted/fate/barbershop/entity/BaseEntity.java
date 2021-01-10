@@ -2,16 +2,17 @@ package net.twisted.fate.barbershop.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.twisted.fate.barbershop.enumeration.DataState;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.GeneratedValue;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 /**
  * 公共父类
@@ -22,6 +23,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @MappedSuperclass
+@Where(clause = "is_active = true")
 public class BaseEntity {
 
     @EmbeddedId
@@ -32,13 +34,26 @@ public class BaseEntity {
     protected String createBy;
     @Column(length = 32)
     protected String updateBy;
-    @Column(length = 16)
-    protected DataState state;
+    @Column
+    protected Boolean isActive = true;
     @Column
     @CreationTimestamp
     protected LocalDateTime createTime;
     @Column
     @UpdateTimestamp
     protected LocalDateTime updateTime;
+
+    public PK getPk() {
+        return Optional.ofNullable(pk).orElseGet(PK::new);
+    }
+
+    public void fillOnCreate(User user) {
+        this.createBy = user.getName();
+        this.updateBy = user.getName();
+    }
+
+    public void fillOnUpdate(User user) {
+        this.updateBy = user.getName();
+    }
 
 }
