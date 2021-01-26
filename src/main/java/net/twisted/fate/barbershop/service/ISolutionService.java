@@ -21,4 +21,6 @@ public interface ISolutionService extends IBaseService<Solution, PK> {
 
     void save(SolutionAddDTO dto, User user);
 
+    void update(PK id, SolutionAddDTO dto, User user);
+
 }

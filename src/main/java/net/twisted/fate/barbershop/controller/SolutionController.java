@@ -29,6 +29,11 @@ public class SolutionController {
         solutionService.save(dto, user);
     }
 
+    @PutMapping("/{id}")
+    public void add(@PathVariable String id, @RequestBody SolutionAddDTO dto, @ApiIgnore User user) {
+        solutionService.update(PK.of(id), dto, user);
+    }
+
     @DeleteMapping("/{id}")
     public void add(@PathVariable String id) {
         solutionService.logicDelete(PK.of(id));

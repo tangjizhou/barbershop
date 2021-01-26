@@ -6,11 +6,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.GeneratedValue;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -24,6 +24,7 @@ import java.util.Optional;
 @Setter
 @MappedSuperclass
 @Where(clause = "is_active = true")
+@EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
 
     @EmbeddedId
@@ -37,10 +38,10 @@ public class BaseEntity {
     @Column
     protected Boolean isActive = true;
     @Column
-    @CreationTimestamp
+    @CreatedDate
     protected LocalDateTime createTime;
     @Column
-    @UpdateTimestamp
+    @LastModifiedDate
     protected LocalDateTime updateTime;
 
     public PK getPk() {

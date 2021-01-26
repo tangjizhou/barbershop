@@ -49,6 +49,14 @@ public class SolutionServiceImpl extends BaseServiceImpl<Solution, PK, SolutionR
     }
 
     @Override
+    public void update(PK id, SolutionAddDTO dto, User user) {
+        Solution solution = get(id).orElseThrow();
+        BeanUtils.copyProperties(dto, solution);
+        solution.fillOnUpdate(user);
+        update(solution);
+    }
+
+    @Override
     public void onCreate(SolutionVersion solutionVersion) {
         List<Solution> solutions = repository.findByPkVersion(PK.VERSION_LATEST);
         List<Solution> copiedSolutions = solutions.stream().map(v -> {
